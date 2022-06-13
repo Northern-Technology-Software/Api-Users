@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "test": "jest"
+    "dev": "nodemon ./bin/www",
+    "test": "set NODE_ENV=development&& jest"
   },
   "author": "Kevin",
   "license": "ISC",

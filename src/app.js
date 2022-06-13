@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const methodOverride = require('method-override');
-require('dotenv').config()
+require('dotenv').config();
+const morgan = require('morgan');
 
 /* inicializacion */
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.set('port', process.env.port || 8080);
+app.use(morgan('dev'));
 
 /* rutas */
 app.use('/', require('./routes/auth'));
