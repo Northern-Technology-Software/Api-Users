@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "NTS",
+    "password": "Nts2022dev",
+    "database": "ntsDev",
+    "host": "database-dev.cn7kgay9ohf1.us-east-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "staging": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
