@@ -1,0 +1,275 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Api-Users",
+        "version": "1.0",
+        "description": "Esta API se encarga de manejar los Usuarios de la aplicación CMMS"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Usuario",
+            "description": "Servicios de CRUD para los usuarios"
+        },
+        {
+            "name": "Autenticación",
+            "description": "Servicios de Autenticación"
+        }
+    ],
+    "paths": {
+        "/user": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "description": "Obtiene la infomación de la base de datos de todos los cliente.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "(OK) La información de los clientes se obtuvo correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExitoClientesGet"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                }
+            }
+        },
+        "/user/{email}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "description": "Obtiene la información de la base de datos de un cliente en específico.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/email"
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "(OK) La información del cliente se obtuvo correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExitoClientesGet"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                }
+            }
+        },
+        "/signup": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "description": "Registrar usuario.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BodyClientesPostSignup"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) La información de los clientes se obtuvo correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExitoClientesPostAuth"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "description": "Ingresar con cuenta de usuario.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BodyClientesPostSignin"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) La información de los clientes se obtuvo correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExitoClientesPostAuth"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "responses": {
+            "Unauthorized": {
+                "description": "(Unauthorized) Usuario no autenticado"
+            },
+            "BadRequest": {
+                "description": "(Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados"
+            },
+            "ServerError": {
+                "description": "Error en servidor"
+            },
+            "Forbidden": {
+                "description": "Se ha denegado el acceso a la acción que se solicita"
+            }
+        },
+        "parameters": {
+            "email": {
+                "name": "email",
+                "required": true,
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas": {
+            "ExitoClientesGet": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id del cliente"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nombre del cliente"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email del cliente"
+                    }
+                }
+            },
+            "BodyClientesPostSignup": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Nombre del cliente",
+                        "example": "Kevin"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email del cliente",
+                        "example": "Kevin@algo.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Contraseña",
+                        "example": "12345"
+                    }
+                }
+            },
+            "BodyClientesPostSignin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email del cliente",
+                        "example": "Kevin@algo.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Contraseña",
+                        "example": "12345"
+                    }
+                }
+            },
+            "ExitoClientesPostAuth": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "description": "Token de autenticación"
+                    }
+                }
+            }
+        }
+    }
+}
