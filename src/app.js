@@ -6,13 +6,13 @@ const morgan = require('morgan');
 
 /* inicializacion */
 const app = express();
+app.set('port', process.env.port || 8080);
 
 /* middelwares */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.set('port', process.env.port || 8080);
 app.use(morgan('dev'));
 
 /* rutas */

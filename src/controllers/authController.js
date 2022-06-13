@@ -9,7 +9,7 @@ exports.signUp = async (req, res) => {
         const { name, email, password } = req.body;
         const emailUser = await users.findOne({ email });
         if (emailUser) {
-            return res.status(401).send('Email ya registrado');
+            return res.status(200).send('Email ya registrado');
         } else {
             passwordHash = await utils.hashedPassword(password);
             users.create({
@@ -31,7 +31,7 @@ exports.signUp = async (req, res) => {
 exports.signIn = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await users.findOne({ email });
+        const user = await users.findOne({ where: {email} });
         if (user) {
             const match = await utils.comparePassword(password, user.password);
             if (match) {

@@ -21,11 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     remember_token: {
-      allowNull: false,
       type: DataTypes.STRING
     },
   }, {
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     tableName: 'users',
     classMethods: {}
